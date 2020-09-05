@@ -1,3 +1,3 @@
 *.ipynb
-/resources
-idea/
+resources/
+.idea/
