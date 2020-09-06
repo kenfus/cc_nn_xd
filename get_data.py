@@ -9,8 +9,7 @@ import ccxt  # noqa: E402
 import datetime
 import pandas as pd
 import numpy as np
-
-cwd = os.getcwd()
+from api_key import api_key
 
 
 def save_data(data, header, file_name, exchange, symbol_path, tf):
@@ -126,8 +125,7 @@ def get_data_from_exchange(symbol, symbol_path, tf, file_name, limit, header, ex
 if __name__ == '__main__':
     # params:
     exchange = 'bitmex'
-    exchange_parameters = {'apiKey': 'Xle3WU_1g5jGC7Kvv-k5iAmm',
-                           'secret': 'h0aZJtA20-YwH8h_M8gJZCdyy7EyZhkx6imjKgTGCxXOrt8o'}
+    exchange_parameters = api_key
     symbol = 'BTC/USD'
     symbol_path = symbol.replace('/', '-')
     tf = '1m'
