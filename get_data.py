@@ -1,5 +1,5 @@
 """
-This python script gets historical data from an exchange with the help of ccxt. 
+This module gets historical data from an exchange with the help of ccxt.
 """
 
 import os
@@ -54,9 +54,8 @@ def miliseconds_from(i):
 
 
 def get_data_from_exchange(symbol, symbol_path, tf, file_name, limit, header, exchange, exchange_parameters):
-
     exchange = getattr(ccxt, exchange)({**exchange_parameters})
-    if False: # "'test' in exchange.urls:
+    if False:  # "'test' in exchange.urls:
         '''
         This checks if the exchange also has a test-net. If it does, we use that. '''
         exchange.urls['api'] = exchange.urls['test']  # ←----- switch the base URL to testnet
@@ -111,7 +110,9 @@ def get_data_from_exchange(symbol, symbol_path, tf, file_name, limit, header, ex
                 print(str(len(data)) + ' of ' + str(int(candle_no)) + ' candles loaded...')
                 time.sleep(sleep)
 
-            except (ccxt.ExchangeError, ccxt.AuthenticationError, ccxt.ExchangeNotAvailable, ccxt.RequestTimeout) as error:
+            except (
+                    ccxt.ExchangeError, ccxt.AuthenticationError, ccxt.ExchangeNotAvailable,
+                    ccxt.RequestTimeout) as error:
                 print('Got an error', type(error).__name__, error.args, ', retrying in', hold, 'seconds...')
                 save_data(data, header, file_name, exchange, symbol_path, tf)
                 time.sleep(hold)
@@ -120,6 +121,7 @@ def get_data_from_exchange(symbol, symbol_path, tf, file_name, limit, header, ex
             print('KeyboardInterrupt! Saving data...')
             save_data(data, header, file_name, exchange, symbol_path, tf)
             break
+
 
 if __name__ == '__main__':
     # params:
