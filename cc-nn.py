@@ -90,7 +90,7 @@ fig.add_trace(go.Scatter(x=df_volume_bars_labeled.index,
                          mode='lines',
                          name='lines'))
 fig = add_trace_to_fig(fig, df_volume_bars_labeled)
-fig.write_html("plotly/df_volume_bars_labeled.html")
+fig.write_html("plots/df_volume_bars_labeled.html")
 #
 # Save the labels and only keep the values which have to be differentiated
 labels = df_volume_bars_labeled[['top_bar', 'bot_bar']]
