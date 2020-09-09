@@ -39,10 +39,10 @@ def add_trace_to_fig(fig, df):
             x=df['date_time'],
             y=df['bot_bar'] * df['close'] - df['bot_bar'] * 1.2,
             marker=dict(
-                color='green',
+                color='red',
                 size=2,
                 line=dict(
-                    color='green',
+                    color='red',
                     width=3
                 )
             ),
@@ -103,7 +103,7 @@ fig.axhline(y=0.95, color='r', linestyle='--')
 fig.figure.savefig("plots/plot_min_ffd.png", bbox_inches='tight')
 
 # Deriving the fractionally differentiated features
-df_differentiated = frac_diff_ffd(X, 0.3)
+df_differentiated = frac_diff_ffd(X, 0.34)
 
 fig = go.Figure(data=[go.Candlestick(x=df_differentiated.index,
                                      open=df_differentiated['open'],
