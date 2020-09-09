@@ -10,6 +10,7 @@ class DataFeed(exchange='bitmex', bar_type='volume', timeframe='1m', type_thresh
         self.min_bars = min_bars
         self.bar_type = bar_type
         self.candles = pd.DataFrame()
+        self.type_bars = None
         self.last_candle = None
 
     def preload_data(self):

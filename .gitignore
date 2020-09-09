@@ -3,4 +3,4 @@ resources/
 .idea/
 .ipynb_checkpoints/
 virtual/
-api_key.py
+parameters.py
