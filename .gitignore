@@ -215,8 +215,6 @@ ENV/
 
 *.ipynb
 resources/
-.idea/
 .ipynb_checkpoints/
 virtual/
 parameters.py
-__pycache__/
