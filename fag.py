@@ -111,18 +111,17 @@ def apply_triple_bar_method(_df, atr_mult=2.8, nr_of_bars_for_vertical=13,
     # Sometimes both get reached in the next n candles. Thus we need to see which one get reached first
     # Is it doable without a for loop? Is this the correct approach?
     first = None
-    for index, row in df.iterrows():
+    for (i, top_bar, bot_bar) in df[['top_bar', 'bot_bar']].itertuples():
         if not first:
-            if row['bot_bar']:
+            if bot_bar:
                 first = 'bot'
-            if row['top_bar']:
+            if top_bar:
                 first = 'top'
-        if not row['top_bar'] and not row['bot_bar']:
+        if not top_bar and not bot_bar:
             first = None
-        if row['top_bar'] and row['bot_bar']:
+        if top_bar and bot_bar:
             if first == 'top':
-                df.loc[index, 'bot_bar'] = 0
+                df.loc[i, 'bot_bar'] = 0
             else:
-                df.loc[index, 'top_bar'] = 0
+                df.loc[i, 'top_bar'] = 0
     return df
-

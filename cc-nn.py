@@ -11,7 +11,7 @@ from fag import create_volume_bars, apply_triple_bar_method
 from mlfinlab.features.fracdiff import frac_diff_ffd, plot_min_ffd
 import plotly.graph_objects as go
 from keras.models import Sequential
-from keras.layers import Dense
+from keras.layers import Dense, Dropout
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import roc_auc_score, plot_roc_curve
 
@@ -102,12 +102,12 @@ def calc_nr_neuros(df_differentiated_memory, output_neurons, alpha=2):
 
 exchange = 'bitmex'
 exchange_parameters = api_key
-symbol = 'BTC/USD'
+symbol = 'ETH/USD'
 symbol_path = symbol.replace('/', '-')
 tf = '1m'
-file_name = 'resources/{}_{}_{}.parquet'.format(exchange, symbol_path, tf)
+starting_from = '2018-08-02 00:00:00Z'
+file_name = 'resources/{}_{}_{}_{}.parquet'.format(exchange, starting_from, symbol_path, tf)
 limit = 1000
-starting_from = '2018-01-10 00:00:00Z'
 header = ['date_time', 'open', 'high', 'low', 'close', 'volume']
 
 # Gets the newest data and saves it into a parquet.
@@ -115,7 +115,6 @@ get_data_from_exchange(symbol, symbol_path, starting_from, tf, file_name, limit,
                        exchange_parameters)
 
 df = pd.read_parquet(file_name)
-df = pd.read_parquet('resources/ETH-USDT.parquet')
 """
 PREPROCESSING
 """
@@ -184,10 +183,15 @@ nr_of_neuros = calc_nr_neuros(df_differentiated_memory, output_dim, 2)
 model = Sequential()
 model.add(Dense(input_dim + 1, input_dim=input_dim, activation='relu'))
 model.add(Dense(nr_of_neuros, activation='relu'))
+model.add(Dropout(0.1))
 model.add(Dense(nr_of_neuros, activation='relu'))
+model.add(Dropout(0.1))
 model.add(Dense(nr_of_neuros, activation='relu'))
+model.add(Dropout(0.1))
 model.add(Dense(nr_of_neuros, activation='relu'))
+model.add(Dropout(0.1))
 model.add(Dense(nr_of_neuros, activation='relu'))
+model.add(Dropout(0.1))
 model.add(Dense(output_dim, activation='softmax'))
 model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['categorical_accuracy'])
 model.summary()

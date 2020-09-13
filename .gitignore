@@ -218,3 +218,5 @@ resources/
 .ipynb_checkpoints/
 virtual/
 parameters.py
+X_train.csv
+y_train.csv

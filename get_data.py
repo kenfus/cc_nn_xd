@@ -102,7 +102,7 @@ def get_data_from_exchange(symbol, symbol_path, starting_from, tf, file_name, li
                 if (ohlcvs[0][0] > end) or (ohlcvs[-1][0] > end):
                     print(exchange.id, " got a candle out of range! has['fetchOHLCV'] = ", exchange.has['fetchOHLCV'])
                     save_data(data, header, file_name, exchange, symbol_path, tf)
-                    break
+                    return True
 
                 from_timestamp += len(ohlcvs) * tf_multi
                 data += ohlcvs
@@ -119,7 +119,8 @@ def get_data_from_exchange(symbol, symbol_path, starting_from, tf, file_name, li
         except KeyboardInterrupt as e:
             print('KeyboardInterrupt! Saving data...')
             save_data(data, header, file_name, exchange, symbol_path, tf)
-            break
+            return True
+
     save_data(data, header, file_name, exchange, symbol_path, tf)
 
 
@@ -127,12 +128,12 @@ if __name__ == '__main__':
     # params:
     exchange = 'bitmex'
     exchange_parameters = api_key
-    symbol = 'BTC/USD'
+    symbol = 'ETH/USD'
     symbol_path = symbol.replace('/', '-')
     tf = '1m'
-    file_name = 'resources/Bitmex_{}_{}.parquet'.format(symbol_path, tf)
+    starting_from = '2018-08-02 00:00:00Z'
+    file_name = 'resources/{}_{}_{}_{}.parquet'.format(exchange, starting_from, symbol_path, tf)
     limit = 1000
-    starting_from = '2017-01-10 00:00:00Z'
     header = ['date_time', 'open', 'high', 'low', 'close', 'volume']
 
     get_data_from_exchange(symbol, symbol_path, starting_from, tf, file_name, limit, header, exchange,
